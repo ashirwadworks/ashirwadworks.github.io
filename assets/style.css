@@ -218,7 +218,7 @@ body.ready .hero h1 span:nth-child(2) b{transition-delay:.14s}
 .ftr .wm{font-family:var(--serif);font-size:clamp(64px,15vw,260px);line-height:.86;letter-spacing:-.02em;margin-bottom:60px}
 .ftr .wm em{font-style:italic;color:#C9A873}
 .ink h2 em{color:#C9A873}
-.ftr .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:34px}
+.ftr .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px}
 .ftr h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#C9A873;margin-bottom:16px}
 .ftr li,.ftr p{font-size:14px;color:var(--mist);margin-bottom:8px}
 .ftr a:hover{color:var(--brass)}
