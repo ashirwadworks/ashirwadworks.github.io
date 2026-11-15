@@ -1,4 +1,5 @@
 (() => {
+  document.documentElement.classList.add('js-ok');
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const C = document.body.dataset;
 
@@ -18,8 +19,10 @@
   $$('.big').forEach(el => { el.innerHTML = el.innerHTML.split(/(<[^>]+>|\s+)/).map(t => !t || /^\s+$/.test(t) || t[0] === '<' ? t : `<span class="w">${t}</span>`).join(''); });
 
   // reveals
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .14, rootMargin: '0px 0px -6% 0px' });
-  $$('.rv,.ph,.ch').forEach(el => io.observe(el));
+  let pending = $$('.rv,.ph,.ch');
+  const reveal = () => { const vh = innerHeight; pending = pending.filter(el => { const r = el.getBoundingClientRect(); if (r.top < vh * .94 && r.bottom > -40) { el.classList.add('in'); return false; } return true; }); };
+  reveal(); addEventListener('scroll', reveal, { passive: true }); addEventListener('resize', reveal); addEventListener('load', reveal);
+  let n = 0; const iv = setInterval(() => { reveal(); if (++n > 24 || !pending.length) clearInterval(iv); }, 250);
 
   // landing page: count-up numbers and chapter dots
   const cio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; cio.unobserve(e.target); const el = e.target, to = +el.dataset.count, t0 = performance.now(); const step = t => { const k = Math.min(1, (t - t0) / 1400); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }), { threshold: .6 });

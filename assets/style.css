@@ -364,3 +364,17 @@ body.ready .ch h1 span:nth-child(2) b{transition-delay:.14s}
 .fab svg{width:17px;height:17px}
 body.nav-open .fab{display:none}
 }
+
+/* safety nets: content must never stay hidden if a script is slow, blocked or fails */
+@keyframes sn-show{to{opacity:1;transform:none}}
+@keyframes sn-left{to{transform:translateX(-101%)}}
+@keyframes sn-right{to{transform:translateX(101%)}}
+@keyframes sn-gone{to{visibility:hidden;opacity:0}}
+.loader{animation:sn-gone .01s 4.5s forwards}
+html:not(.js-ok) .rv,html:not(.js-ok) .big .w,html:not(.js-ok) .hero h1 span b,html:not(.js-ok) .ch h1 span b{animation:sn-show .6s 1.2s forwards}
+html:not(.js-ok) .ph::before{animation:sn-left 1s 1.2s forwards}
+html:not(.js-ok) .ph::after{animation:sn-right 1s 1.2s forwards}
+/* a photo that is on screen for 3 seconds opens even if the reveal never fired */
+.ph::before{animation:sn-left 1s 3s forwards}
+.ph::after{animation:sn-right 1s 3s forwards}
+.ph.in::before,.ph.in::after{animation:none}
